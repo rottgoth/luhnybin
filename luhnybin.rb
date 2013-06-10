@@ -19,9 +19,6 @@ class Luhnybin
   end
 
   def luhn_check
-    if all_zeros?
-      return @output = original_input.gsub( input, input.gsub( '0', 'X' ) )
-    end
     get_delimiters
     numbers = input.gsub(delimiter,'').split('').map &:to_i
     combinations = get_valid_numbers numbers
@@ -80,10 +77,6 @@ class Luhnybin
         offset = input.index( @delimiter, offset ) + 1
       end
     end
-  end
-
-  def all_zeros?
-    input.gsub('0','').empty?
   end
 end
 
