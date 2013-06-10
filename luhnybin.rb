@@ -46,7 +46,10 @@ class Luhnybin
           valid_combination.insert position, delimiter
           masked_input.insert position, delimiter
         end
-        @output = @output.gsub( valid_combination, masked_input )
+        valid_combination.size.times do |index|
+          @output = @output.sub( valid_combination, masked_input )
+          valid_combination[index] = 'X'
+        end
       end
     end
   end
