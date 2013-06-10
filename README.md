@@ -64,8 +64,9 @@ The first time you execute `run.sh`, you'll see a test failure:
 
 Modify `mask.sh` and make the tests pass. [Line feeds](http://en.wikipedia.org/wiki/Newline) delineate the test cases. If you pass a number on the command line, `run.sh` will repeat the test suite the specified number of times; this is useful for performance comparisons. The tests aren't set in stone&mdash;if you have an idea for improving the test suite, please submit a pull request.
 
-This isn't a contest, but an innovative solution could score you interviews at Square. I'm primarily interested to see how different programming languages stack up with regard to readability and performance.
+The Solution
+------------------------
 
-Once we have enough interesting submissions, I'll summarize the results in a followup [blog](http://corner.squareup.com/) post and open source our own Java-based implementation. In the mean time, if you enjoy working with talented people on challenging problems like this, email your résumé to <a href="mailto:luhnybin@squareup.com">luhnybin@squareup.com</a>.
+The solution for the challenge can be found in the file `luhnybin.rb`, was coded using ruby version 1.9.3. It can be run using `mask.sh` and the test suit can be run against it running `run.sh`.
 
-Good luck!
+Enjoy!
