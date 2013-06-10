@@ -1,22 +1,27 @@
 class Luhnybin
 
-  attr_accessor :input, :output, :delimiter, :delimiter_indexes
+  attr_accessor :original_input, :input, :output, :delimiter, :delimiter_indexes
 
   def initialize input
-    @input = input.chomp!
+    @original_input = input.chomp!
+    @input = @original_input
     @delimiter = ''
     @delimiter_indexes = []
-    @output = @input
+    @output = @original_input.clone
   end
 
   def mask
-    if input.size >= 14
+    if original_input.size >= 14
+      @input = original_input.scan(/(\d+[\s|-]?)/).flatten.join
       luhn_check
     end
     output
   end
 
   def luhn_check
+    if all_zeros?
+      return @output = original_input.gsub( input, input.gsub( '0', 'X' ) )
+    end
     get_delimiters
     numbers = input.gsub(delimiter,'').split('').map &:to_i
     combinations = get_valid_numbers numbers
@@ -36,11 +41,12 @@ class Luhnybin
       end
       if luhn_sum_combination.reduce(:+) % 10 == 0
         valid_combination = combination.join
-        masked_input = input.gsub(delimiter,'').gsub( valid_combination, 'X'*valid_combination.size )
+        masked_input = 'X'*valid_combination.size
         delimiter_indexes.each do |position|
+          valid_combination.insert position, delimiter
           masked_input.insert position, delimiter
         end
-        @output = masked_input
+        @output = @output.gsub( valid_combination, masked_input )
       end
     end
   end
@@ -48,7 +54,7 @@ class Luhnybin
   def get_valid_numbers numbers
     valid_numbers = []
     # valid credit card number's length
-    ( 14..16 ).each do |number_length|
+    [ 16, 15, 14 ].each do |number_length|
       # only one combination for that length
       if ( numbers.size - number_length ).zero?
         valid_numbers.push numbers
@@ -71,6 +77,10 @@ class Luhnybin
         offset = input.index( @delimiter, offset ) + 1
       end
     end
+  end
+
+  def all_zeros?
+    input.gsub('0','').empty?
   end
 end
 
